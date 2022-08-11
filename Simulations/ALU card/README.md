@@ -1,1 +1,1 @@
-
+The file 74245.circ contains the partial model of a 74HC245 IC, made by me, used in the models contained in the other files. LogiSim-Evolution may prompt you to link the 74245 model when you open one of the other files.
