@@ -1,1 +1,1 @@
-This directory contains high resolution pictures of a correctly-assembled TalosES™ ALU card. These pictures are meant as a reference to help you assemble your own card. All pictures copyright (c) 2022 by Bernardo Kastrup.
+This directory contains high resolution pictures of a correctly-assembled Talos ES™'s ALU card. These pictures are meant as a reference to help you assemble your own card. All pictures copyright (c) 2022 by Bernardo Kastrup.
