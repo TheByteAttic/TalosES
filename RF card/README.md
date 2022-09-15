@@ -1,1 +1,1 @@
-This directory contains the schematics of Talos ES™'s RF card.
+This directory contains the design and manufacturing files of Talos ES™'s RF card, as well as reference pictures to help you assemble your own.
