@@ -1,0 +1,1 @@
+These are high resolution pictures of a correctly assembled TalesES™ RF card, which provide a reference if you are assembling your own. Please notice that the capacitor I am using in position C1 is a larger one than what is specified in the schematics and bill of materials. I am using a larger capacitor merely because I had a bunch of those lying around.
