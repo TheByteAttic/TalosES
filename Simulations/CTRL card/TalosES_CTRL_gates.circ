@@ -142,7 +142,7 @@
       <a name="facing" val="north"/>
       <a name="label" val="nRST"/>
     </comp>
-    <comp lib="0" loc="(430,790)" name="Pin">
+    <comp lib="0" loc="(430,820)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="south"/>
       <a name="label" val="SIMF"/>
@@ -180,9 +180,6 @@
       <a name="facing" val="north"/>
     </comp>
     <comp lib="1" loc="(350,100)" name="AND Gate"/>
-    <comp lib="1" loc="(430,840)" name="NOT Gate">
-      <a name="facing" val="south"/>
-    </comp>
     <comp lib="1" loc="(430,940)" name="OR Gate">
       <a name="facing" val="north"/>
     </comp>
@@ -281,8 +278,7 @@
     <wire from="(420,100)" to="(470,100)"/>
     <wire from="(420,140)" to="(440,140)"/>
     <wire from="(430,430)" to="(430,530)"/>
-    <wire from="(430,790)" to="(430,810)"/>
-    <wire from="(430,840)" to="(430,860)"/>
+    <wire from="(430,820)" to="(430,860)"/>
     <wire from="(430,920)" to="(430,940)"/>
     <wire from="(440,140)" to="(440,230)"/>
     <wire from="(450,1040)" to="(450,1060)"/>
