@@ -186,6 +186,9 @@
     <comp lib="1" loc="(430,940)" name="OR Gate">
       <a name="facing" val="north"/>
     </comp>
+    <comp lib="1" loc="(450,1010)" name="NOT Gate">
+      <a name="facing" val="north"/>
+    </comp>
     <comp lib="1" loc="(460,370)" name="AND Gate"/>
     <comp lib="1" loc="(540,100)" name="AND Gate"/>
     <comp lib="1" loc="(550,370)" name="AND Gate"/>
@@ -282,7 +285,8 @@
     <wire from="(430,840)" to="(430,860)"/>
     <wire from="(430,920)" to="(430,940)"/>
     <wire from="(440,140)" to="(440,230)"/>
-    <wire from="(450,990)" to="(450,1060)"/>
+    <wire from="(450,1040)" to="(450,1060)"/>
+    <wire from="(450,990)" to="(450,1010)"/>
     <wire from="(460,370)" to="(480,370)"/>
     <wire from="(460,540)" to="(570,540)"/>
     <wire from="(460,580)" to="(500,580)"/>
