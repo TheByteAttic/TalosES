@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project source="3.7.0" version="1.0">
-  This file is intended to be loaded by Logisim-evolution v3.7.0(https://github.com/logisim-evolution/).
+<project source="3.8.0" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v3.8.0(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -459,6 +459,7 @@
     <comp lib="0" loc="(1960,960)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
+      <a name="label" val="PCOE"/>
       <a name="output" val="true"/>
     </comp>
     <comp lib="0" loc="(1980,1790)" name="Tunnel">
@@ -557,7 +558,7 @@
     </comp>
     <comp lib="0" loc="(2520,2170)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="SYSCLK"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(2570,2130)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -985,23 +986,23 @@ a1 41 a1 1 81 1 81 9
     <comp lib="6" loc="(2840,1720)" name="74273"/>
     <comp lib="6" loc="(710,1720)" name="74273"/>
     <comp lib="6" loc="(850,900)" name="7432"/>
-    <comp lib="8" loc="(1041,1747)" name="Text">
+    <comp lib="8" loc="(1040,1745)" name="Text">
       <a name="font" val="SansSerif plain 40"/>
       <a name="text" val="DIR2"/>
     </comp>
-    <comp lib="8" loc="(1175,1208)" name="Text">
+    <comp lib="8" loc="(1175,1205)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="DM2"/>
     </comp>
-    <comp lib="8" loc="(1503,1747)" name="Text">
+    <comp lib="8" loc="(1500,1745)" name="Text">
       <a name="font" val="SansSerif plain 40"/>
       <a name="text" val="DIR1"/>
     </comp>
-    <comp lib="8" loc="(1619,1213)" name="Text">
+    <comp lib="8" loc="(1615,1210)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="DM1"/>
     </comp>
-    <comp lib="8" loc="(1961,1747)" name="Text">
+    <comp lib="8" loc="(1960,1745)" name="Text">
       <a name="font" val="SansSerif plain 40"/>
       <a name="text" val="DIR0"/>
     </comp>
@@ -1009,23 +1010,23 @@ a1 41 a1 1 81 1 81 9
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="DM0"/>
     </comp>
-    <comp lib="8" loc="(2702,1751)" name="Text">
+    <comp lib="8" loc="(2700,1750)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="IMM"/>
     </comp>
-    <comp lib="8" loc="(550,779)" name="Text">
+    <comp lib="8" loc="(550,775)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="IR"/>
     </comp>
-    <comp lib="8" loc="(579,1745)" name="Text">
+    <comp lib="8" loc="(575,1745)" name="Text">
       <a name="font" val="SansSerif plain 40"/>
       <a name="text" val="DIR3"/>
     </comp>
-    <comp lib="8" loc="(637,494)" name="Text">
+    <comp lib="8" loc="(635,490)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="NOP generator"/>
     </comp>
-    <comp lib="8" loc="(719,1209)" name="Text">
+    <comp lib="8" loc="(715,1205)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="DM3"/>
     </comp>
