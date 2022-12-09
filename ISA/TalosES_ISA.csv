@@ -3,7 +3,7 @@
 Opcode (bin);Type;Opcode;ASSEMBLY MNEMONIC;Meaning;;AHLE;AHOE;ALLE;ALOE;AR1CE;AR1LE;AR1OE;AR2CE;AR2LE;AR2OE;BHLE;BHOE;BLLE;BLOE;EDBIE;IBHIOE;IBLIOE;JAHLE;JALLE;PCLE;RHOE;RLOE;SFW;SNH;SNL;IMMHOE;IMMLOE;RD;WR;CIMF;SOMF;FREE;;CHECK-SUM
 0;;0;NOP;No operation (Nota bene, ALU always operates, even if stealthly);;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;;0
 1;;1;AH=$nn;Load immediate;;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;;2
-10;;2;AL=$nn;"""$nn"" must be replaced with a hexadecimal number between $0 and $FF";;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;;2
+10;;2;AL=$nn;$nn must be replaced with a hexadecimal number between $0 and $FF;;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;;2
 11;;3;BH=$nn;;;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;;2
 100;;4;BL=$nn;;;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;;2
 101;;5;JAH=$nn;;;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;1;0;0;0;0;0;0;;2
