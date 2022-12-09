@@ -1,4 +1,4 @@
-﻿;;Last update: 09-December-2022 @06:20 CEST;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;
+;;Last update: 09-December-2022 @06:20 CEST;;;;;;;;;;;;;;;;;;;0;;;;;;;;;;;;;;;;;;
 ;;Talos ES™ instruction set;;;;Instruction word;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Opcode (bin);Type;Opcode;ASSEMBLY MNEMONIC;Meaning;;AHLE;AHOE;ALLE;ALOE;AR1CE;AR1LE;AR1OE;AR2CE;AR2LE;AR2OE;BHLE;BHOE;BLLE;BLOE;EDBIE;IBHIOE;IBLIOE;JAHLE;JALLE;PCLE;RHOE;RLOE;SFW;SNH;SNL;IMMHOE;IMMLOE;RD;WR;CIMF;SOMF;FREE;;CHECK-SUM
 0;;0;NOP;No operation (Nota bene, ALU always operates, even if stealthly);;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;;0
