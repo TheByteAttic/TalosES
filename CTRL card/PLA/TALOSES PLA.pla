@@ -1,0 +1,28 @@
+# Berkeley PLA format generated using
+#
+# CUPL(WM)        5.0a Serial# 60008009
+# Device          g16v8as  Library DLIB-h-40-2
+# Created         Sat Dec 10 01:30:12 2022
+# Name            TalosES PLA 
+# Partno          ATF16V8C 
+# Revision        1.0 
+# Date            10 December 2022 
+# Designer        Bernardo Kastrup 
+# Company         The Byte Attic 
+# Assembly        None 
+# Location        The Netherlands 
+#
+# Inputs  OPIMM0 OPIMM1 OPIMM2 OPIMM3 
+#         OPIMM4 OPIMM5 OPIMM6 OPIMM7 
+#         PLAOUT 
+# Outputs PLAOUT 
+.i 9
+.o 1
+.p 6
+10000000- 1
+01000000- 1
+11000000- 1
+00100000- 1
+10100000- 1
+01100000- 1
+.end

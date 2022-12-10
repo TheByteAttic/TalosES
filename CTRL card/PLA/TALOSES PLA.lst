@@ -1,0 +1,48 @@
+LISTING FOR LOGIC DESCRIPTION FILE: TALOSES PLA.pld                  Page 1
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Sat Dec 10 01:30:12 2022
+
+  1:Name     TalosES PLA ;
+  2:PartNo   ATF16V8C ;
+  3:Date     10 December 2022 ;
+  4:Revision 1.0 ;
+  5:Designer Bernardo Kastrup ;
+  6:Company  The Byte Attic ;
+  7:Assembly None ;
+  8:Location The Netherlands ;
+  9:Device   g16v8a ;
+ 10:
+ 11:PROPERTY ATMEL {POWER_RESET = OFF};
+ 12:PROPERTY ATMEL {PIN_KEEP = ON};
+ 13:PROPERTY ATMEL {PREASSIGN = KEEP};
+ 14:
+ 15:/** Inputs **/
+ 16:Pin 2 = OPIMM7;
+ 17:Pin 3 = OPIMM6;
+ 18:Pin 4 = OPIMM5;
+ 19:Pin 5 = OPIMM4;
+ 20:Pin 6 = OPIMM3;
+ 21:Pin 7 = OPIMM2;
+ 22:Pin 8 = OPIMM1;
+ 23:Pin 9 = OPIMM0;
+ 24:
+ 25:/** Output **/
+ 26:Pin 12 = PLAOUT;
+ 27:
+ 28:/** Logic **/
+ 29:PLAOUT =   !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 & !OPIMM1 &  OPIMM0
+ 30:         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 &  OPIMM1 & !OPIMM0
+ 31:         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 &  OPIMM1 &  OPIMM0
+ 32:         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 & !OPIMM1 & !OPIMM0
+ 33:         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 & !OPIMM1 &  OPIMM0
+ 34:         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 &  OPIMM1 & !OPIMM0;
+ 35:
+ 36:
+
+
+
+Jedec Fuse Checksum       (2161)
+Jedec Transmit Checksum   (b481)

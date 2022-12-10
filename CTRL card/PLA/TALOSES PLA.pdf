@@ -1,0 +1,139 @@
+{COMPONENT C:\USERS\BERNA\ONEDRIVE\TALOS ES\PLA\TALOSES PLA.SYM
+
+ {ENVIRONMENT
+  {PDIFvrev 3.00}
+  {Program "CUPL(WM) Version 5.0a"}
+  {DBtype "Schematic"}
+  {DBvrev 1.01}
+  {DBtime "Sat Dec 10 01:30:12 2022 "}
+  {DBunit "MIL"}
+  {DBgrid 10}
+  {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
+          "PINNAM" 6 "PINCON" 4 "REFDES" 2 "ATTR" 6 "SDOT" 1 
+          "DEVICE" 5 "OUTLIN" 5 "ATTR2" 6 "NOTES" 6 "NETNAM" 4 
+          "CMPNAM" 5 "BORDER" 5}
+ }
+
+ {USER
+  {VIEW
+   {Mode SYMB}
+   {Nlst OPEN}
+   {Vw 0 0 2}
+   {Lv 12 2 2 2 0 0 2 2 2 2 0 0 2 1 2 0 0 0 0}
+   {Gs 10 10}
+  }
+ }
+
+ {DISPLAY
+  [Ly "PINNUM"]
+  [Ls "SOLID"][Wd 0]
+  [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+ }
+
+ {SYMBOL
+  {PIN_DEF
+   [Ly "PINCON"]
+   {P OPIMM7 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P OPIMM6 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P OPIMM5 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P OPIMM4 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P OPIMM3 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P OPIMM2 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P OPIMM1 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P OPIMM0 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
+   {P PLAOUT {Pt "I/O"}{Lq 0}{Ploc 320 20}}
+  }
+
+  {PKG
+   [Ly "REFDES"]
+   [Ts 25][Tj "CB"][Tr 0][Tm "N"]
+   {Rdl 210 190}
+
+   [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 170}
+   {Pnl 120 150}
+   {Pnl 120 130}
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
+   {Pnl 120 30}
+   [Ts 15][Tj "LC"]
+   {Pnl 300 30}
+
+   {Sd A 2 3 4 5 6 7 8 9 12}
+  }
+
+  {PIC
+   [Ly "GATE"]
+   [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+   {R 130 180 290 0}
+   {L 130 160 100 160}
+   {L 130 140 100 140}
+   {L 130 120 100 120}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 130 20 100 20}
+   {L 290 20 320 20}
+   [Ly "PINNAM"]
+   [Tj "LC"]
+   {T "OPIMM7" 140 160}
+   {T "OPIMM6" 140 140}
+   {T "OPIMM5" 140 120}
+   {T "OPIMM4" 140 100}
+   {T "OPIMM3" 140 80}
+   {T "OPIMM2" 140 60}
+   {T "OPIMM1" 140 40}
+   {T "OPIMM0" 140 20}
+   [Tj "RC"]
+   {T "PLAOUT" 280 20}
+   [Ly "DEVICE"]
+   [Tj "CT"]
+   {T "G16V8AS" 210 -10}
+  }
+
+  {ATR
+   {IN
+    {Org 100 20}
+    {Ty 255}
+   }
+   {EX
+    [Ly "ATTR2"]
+    [Ts 12][Tj "CT"][Tr 0][Tm "N"]
+    {At PLD C:\USERS\BERNA\ONEDRIVE\TALOS ES\PLA\TALOSES PLA 210 180}
+   }
+  }
+ }
+
+ {DETAIL
+  {ANNOTATE
+  }
+
+  {NET_DEF
+   {N OPIMM7
+   }
+   {N OPIMM6
+   }
+   {N OPIMM5
+   }
+   {N OPIMM4
+   }
+   {N OPIMM3
+   }
+   {N OPIMM2
+   }
+   {N OPIMM1
+   }
+   {N OPIMM0
+   }
+   {N PLAOUT
+   }
+  }
+
+  {SUBCOMP
+  }
+ }
+}

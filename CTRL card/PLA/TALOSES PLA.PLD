@@ -1,0 +1,34 @@
+Name     TalosES PLA ;
+PartNo   ATF16V8C ;
+Date     10 December 2022 ;
+Revision 1.0 ;
+Designer Bernardo Kastrup ;
+Company  The Byte Attic ;
+Assembly None ;
+Location The Netherlands ;
+Device   g16v8a ;
+
+PROPERTY ATMEL {POWER_RESET = OFF};
+PROPERTY ATMEL {PIN_KEEP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+/** Inputs **/
+Pin 2 = OPIMM7;
+Pin 3 = OPIMM6;
+Pin 4 = OPIMM5;
+Pin 5 = OPIMM4;
+Pin 6 = OPIMM3;
+Pin 7 = OPIMM2;
+Pin 8 = OPIMM1;
+Pin 9 = OPIMM0;
+
+/** Output **/
+Pin 12 = PLAOUT;
+
+/** Logic **/
+PLAOUT =   !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 & !OPIMM1 &  OPIMM0
+         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 &  OPIMM1 & !OPIMM0
+         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 & !OPIMM2 &  OPIMM1 &  OPIMM0
+         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 & !OPIMM1 & !OPIMM0
+         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 & !OPIMM1 &  OPIMM0
+         # !OPIMM7 & !OPIMM6 & !OPIMM5 & !OPIMM4 & !OPIMM3 &  OPIMM2 &  OPIMM1 & !OPIMM0;
