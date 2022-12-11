@@ -5,5 +5,5 @@ This repository is currently incomplete and a work-in-progress. It will be slowl
 
 ![96595466-CA46-4770-840A-B6CB765BC0A2_1_105_c](https://user-images.githubusercontent.com/69539226/187976081-edb01e15-81d2-4611-bdeb-49175b5507f4.jpeg)
 
-<p><hr>
+<p>
 Copyright © 2022 by Bernardo Kastrup. All rights reserved.
