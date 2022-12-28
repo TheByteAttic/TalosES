@@ -1,1 +1,1 @@
-Design files (including .jed file for programming the PLA) for the PLA (ATF16V8C) used in Talos ES™'s control card. You only really need the .jef file; the other files are just for reference. The .PLD file may also be useful as it shows the actual logic used.
+Design files (including .jed file for programming the PLA) for the ATF16V8C used in Talos ES™'s control card. You only really need the .jef file; the other files are just for reference. The .PLD file may also be useful as it shows the actual logic used (it is a readable text file, as you can see by clicking on it).
