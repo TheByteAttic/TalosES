@@ -1,1 +1,1 @@
-This directory contain the LogiSim-Evolution source files of Talos ES™.
+These directories contain the LogiSim-Evolution source files of Talos ES™.
