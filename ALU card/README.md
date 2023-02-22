@@ -4,10 +4,11 @@ This directory contains the design and manufacturing files of Talos ES™'s ALU 
 <p>
 <b>DISCLAIMER</b>: <i>I have NOT respun this board myself (as the original works well enough), so the new version in the files above is, strictly speaking, partly untested.</i> That said, the changes are minimal and the functionality identical to the tested original. Automatic tool checks have also been performed (all nets are checked as routed, and the new version is DRC-clean). Therefore, there is no (new) reason to think that this new version won't work; if anything, it will work better, due to the better electrical characteristics of the two inner planes (for power and ground). Still, just as always, I do NOT take responsibility for any mishaps or losses you may incur if you decide to make this board, or have it made for you. If in doubt, check the more rigorous language in this repository's license file.<br>
 <p>
-<b>LAYER ORDER, from top to bottom, or first to last</b>:
+<b>LAYER ORDER, from top to bottom, or first to last</b>:<br>
+  <p>
 <i>
 TopLayer<br>
 Inner1<br>
 Inner2<br>
-BottomLayer<br>
+BottomLayer
 </i>
