@@ -6,8 +6,8 @@ This directory contains the design and manufacturing files of Talos ES™'s ALU 
 <p>
 <b>LAYER ORDER, from top to bottom, or first to last</b>:
 <i>
-TopLayer
-Inner1
-Inner2
-BottomLayer
+TopLayer<br>
+Inner1<br>
+Inner2<br>
+BottomLayer<br>
 </i>
