@@ -1,0 +1,1 @@
+Here you will find the Arduino sketch that constitutes Talos ES™'s basic firmware (an assembly monitor plus BIOS). <i>This is work in progress!</i> When the firmware is final, I'll explicitly announce it here.
