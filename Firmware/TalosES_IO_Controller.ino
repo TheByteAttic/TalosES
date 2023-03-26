@@ -14,8 +14,8 @@
 #define Tx      11  // Serial transmitter pin 17 on the ATmega1284p
 #define STPSLC  12  // Active LOW
 #define STPCLK  13
-#define nHLT    14  // Active LOW
-#define nRST    15  // Active LOW
+#define HLT     14  // Active HIGH
+#define RST     15  // Active HIGH
 #define DRD     16  // Active LOW
 #define DWR     17  // Active LOW
 #define IRD     18  // Active LOW
@@ -30,12 +30,13 @@
 #define KB_LF     10  // Line Feed
 #define KB_ESC    27  // ESCape
 #define KB_BS     8   // Back Space
-#define KB_SPACE  32 // Space
-#define KB_COMMA  44 // Comma
+#define KB_SPACE  32  // Space
+#define KB_COMMA  44  // Comma
 
 // DELAY is the time to wait for a hardware transaction
 #define DELAY 1
 
+volatile bool step = true;    // Global step mode indicator
 const int chipSelect = CS;    // Required by SPI library
 volatile byte editLine[80];   // String where user types in commands
 volatile byte pos = 0;        // Position in edit line currently occupied by cursor
@@ -48,8 +49,8 @@ void setup() {
   pinMode(COMF, OUTPUT);
   pinMode(STPSLC, OUTPUT);
   pinMode(STPCLK, OUTPUT);
-  pinMode(nHLT, OUTPUT);
-  pinMode(nRST, OUTPUT);
+  pinMode(HLT, OUTPUT);
+  pinMode(RST, OUTPUT);
   pinMode(DRD, OUTPUT);
   pinMode(DWR, OUTPUT);
   pinMode(IRD, OUTPUT);
@@ -65,10 +66,10 @@ void setup() {
   // Writing default values to outputs
   digitalWrite(SIMF, HIGH);   // Inactive
   digitalWrite(COMF, HIGH);   // Inactive
-  digitalWrite(STPSLC, HIGH); // Inactive
+  digitalWrite(STPSLC, LOW);  // Active
   digitalWrite(STPCLK, LOW);
-  digitalWrite(nHLT, LOW);    // Active, CPU should be halted by default
-  digitalWrite(nRST, LOW);    // Active, CPU should be in reset by default, to release the instruction memory
+  digitalWrite(HLT, HIGH);    // Active, CPU should be halted by default
+  digitalWrite(RST, HIGH);    // Active, CPU should be in reset by default, to release the instruction memory
   digitalWrite(DRD, HIGH);    // Inactive
   digitalWrite(DWR, HIGH);    // Inactive
   digitalWrite(IRD, HIGH);    // Inactive
@@ -120,7 +121,14 @@ void enter() {
   String mnemonic; // Possible second word in the edit line
   String address; // Possible second word in the edit line
   String data; // Possible third word in the edit line
+  String status; // Possible second word in the edit line
   command = getNextWord(true);
+  if (step) { // If in step mode, check if user just pressed ENTER
+    if (editLine[0] == KB_CR) {
+      if (digitalRead(STPCLK) == LOW) digitalWrite(STPCLK, HIGH); // If so, perform a clock transition step
+      else digitalWrite(STPCLK, LOW);
+    }
+  }
   if (command == F("ipeek")) {
     address = getNextWord(false);
     address.remove(0,1); // Removes the leading '$' denoting hexadecimal value
@@ -154,6 +162,26 @@ void enter() {
     data.remove(0,1); // Removes the leading '$' denoting hexadecimal value
     byte d = byte(strtol(data.c_str(), NULL, 16)); // Converts to HEX number type
     dpoke(a, d);
+  }
+  else if (command == F("reset")) {
+    status = getNextWord(false);
+    if (status == F("on")) digitalWrite(RST, HIGH);
+    else if (status == F("off")) digitalWrite(RST, LOW);
+  }
+  else if (command == F("halt")) {
+    status = getNextWord(false);
+    if (status == F("on")) digitalWrite(HLT, HIGH);
+    else if (status == F("off")) digitalWrite(HLT, LOW);
+  }
+  else if (command == F("step")) {
+    status = getNextWord(false);
+    if (status == F("on")) {
+      step = true;
+      digitalWrite(STPSLC, LOW);
+    } else if (status == F("off")) {
+      step = false;
+      digitalWrite(STPSLC, HIGH);
+    }
   }
 }
 
@@ -256,10 +284,4 @@ String getNextWord(bool fromTheBeginning) {
   nextWord[j - i] = 0; // Null-termination
   initialPosition = j; // Next time round, start from here, unless...
   return (nextWord); // Return the contents of the buffer
-}
-
-void reset_cpu() {
-  digitalWrite(nRST, LOW);
-  delay(DELAY);
-  digitalWrite(nRST, HIGH);
 }
