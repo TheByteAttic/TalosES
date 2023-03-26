@@ -1,4 +1,4 @@
-Design and manufacturing files for Talos ES™'s motherboard, which doubles as backplane board. <i>These files are NOT yet fully tested</i>.<br><p>
+Design and manufacturing files for Talos ES™'s motherboard, which doubles as backplane board.
 This is a four-layer board.<br>
 <p>
 <b>LAYER ORDER, from top to bottom, or first to last</b>:<br>
