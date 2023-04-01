@@ -1132,7 +1132,7 @@ a1 41 a1 1 81 1 81 9
     </comp>
     <comp lib="6" loc="(2780,1680)" name="74273"/>
     <comp lib="6" loc="(650,1680)" name="74273"/>
-    <comp lib="6" loc="(850,900)" name="7432"/>
+    <comp lib="6" loc="(850,900)" name="7408"/>
     <comp lib="8" loc="(1110,1170)" name="Text">
       <a name="font" val="SansSerif plain 52"/>
       <a name="text" val="DM2"/>
