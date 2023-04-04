@@ -64,8 +64,8 @@ void setup() {
   DDRA = B11111111;
 
   // Writing default values to outputs
-  digitalWrite(SIMF, HIGH);   // Inactive
-  digitalWrite(COMF, HIGH);   // Inactive
+  digitalWrite(SIMF, LOW);    // Inactive
+  digitalWrite(COMF, LOW);    // Inactive
   digitalWrite(STPSLC, LOW);  // Active
   digitalWrite(STPCLK, LOW);
   digitalWrite(HLT, HIGH);    // Active, CPU should be halted by default
@@ -182,6 +182,16 @@ void enter() {
       step = false;
       digitalWrite(STPSLC, HIGH);
     }
+  }
+  else if (command == F("simf")) {
+    digitalWrite(SIMF, HIGH);
+    delay(DELAY);
+    digitalWrite(SIMF, LOW);
+  }
+  else if (command == F("comf")) {
+    digitalWrite(COMF, HIGH);
+    delay(DELAY);
+    digitalWrite(COMF, LOW);
   }
 }
 
