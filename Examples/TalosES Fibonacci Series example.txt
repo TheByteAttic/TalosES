@@ -1,0 +1,50 @@
+// TalosES Fibonacci series example
+// The results will be stored in D$0000 to D$000B
+// Correct result sequence, in hexadecimal:
+// $01 $02 $03 $05 $08 $0D $15 $22 $37 $59 $90 $E9
+
+I$00 AH=$00
+I$02 AL=$00
+I$04 AR1=A,AR2=A
+I$05 AL=$10
+I$07 JA=A
+I$08 AH=$00
+I$0A BH=$01
+I$0C AL=$0B
+I$0E BL=$01
+I$10 (AR1)=RH,AR2++
+I$11 AH=RH,AL=RL,AR1++
+I$12 JNZL,(AR2)=RH,AR1++
+I$13 BH=RH,AL=RL,AR2++
+I$14 SOMF
+I$15 JAL=$17
+I$17 JP
+I$18 NOP
+
+// Assembled listing:
+//-------------------
+I$0000: $01 //AH=$nn
+I$0001: $00 //Immediate
+I$0002: $02 //AL=$nn
+I$0003: $00 //Immediate
+I$0004: $55 //AR1=A,AR2=A
+I$0005: $02 //AL=$nn
+I$0006: $10 //Immediate
+I$0007: $44 //JA=A
+I$0008: $01 //AH=$nn
+I$0009: $00 //Immediate
+I$000a: $03 //BH=$nn
+I$000b: $01 //Immediate
+I$000c: $02 //AL=$nn
+I$000d: $0b //Immediate
+I$000e: $04 //BL=$nn
+I$000f: $01 //Immediate
+I$0010: $32 //(AR1)=RH,AR2++
+I$0011: $a6 //AH=RH,AL=RL,AR1++
+I$0012: $dc //JNZL,(AR2)=RH,AR1++
+I$0013: $ab //BH=RH,AL=RL,AR2++
+I$0014: $ff //SOMF
+I$0015: $06 //JAL=$nn
+I$0016: $17 //Immediate
+I$0017: $bd //JP
+I$0018: $00 //NOP

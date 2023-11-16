@@ -1,0 +1,86 @@
+// TalosES Multiplication example
+// Before running this code:
+// -- The multiplicand should be in D$0000
+// -- The multiplier should be in D$0001
+// The result will be stored in D$0002
+
+I$00 BH=$00
+I$02 AH=$00
+I$04 AL=$01
+I$06 AR1=A,AR2=A
+I$07 AL=$26
+I$09 JA=A,AR2++
+I$0A AL=(AR1)
+I$0B BL=$00
+I$0D JZL
+I$0E AR1=B
+I$0F AH=(AR1)
+I$10 BL=$01
+I$12 JZL
+I$13 NOP
+I$14 BH=AH
+I$15 BL=$02
+I$17 JZL
+I$18 NOP
+I$19 JAL=$1F
+I$1B BL=$01
+I$1D AL=RL
+I$1E AL=RL
+I$1F AH=RH,AL=RL
+I$20 JNZL
+I$21 (AR2)=AH
+I$22 JAL=$27
+I$24 JP
+I$25 NOP
+I$26 (AR2)=RH
+I$27 SOMF
+I$28 JAL=$2A
+I$2A JP
+I$2B NOP
+
+// Assembled listing:
+//-------------------
+I$0000: $03 //BH=$nn
+I$0001: $00 //Immediate
+I$0002: $01 //AH=$nn
+I$0003: $00 //Immediate
+I$0004: $02 //AL=$nn
+I$0005: $01 //Immediate
+I$0006: $55 //AR1=A,AR2=A
+I$0007: $02 //AL=$nn
+I$0008: $26 //Immediate
+I$0009: $6d //JA=A,AR2++
+I$000a: $0b //AL=(AR1)
+I$000b: $04 //BL=$nn
+I$000c: $00 //Immediate
+I$000d: $bf //JZL
+I$000e: $3f //AR1=B
+I$000f: $0a //AH=(AR1)
+I$0010: $04 //BL=$nn
+I$0011: $01 //Immediate
+I$0012: $bf //JZL
+I$0013: $00 //NOP
+I$0014: $49 //BH=AH
+I$0015: $04 //BL=$nn
+I$0016: $02 //Immediate
+I$0017: $bf //JZL
+I$0018: $00 //NOP
+I$0019: $06 //JAL=$nn
+I$001a: $1f //Immediate
+I$001b: $04 //BL=$nn
+I$001c: $01 //Immediate
+I$001d: $4f //AL=RL
+I$001e: $4f //AL=RL
+I$001f: $a0 //AH=RH,AL=RL
+I$0020: $c5 //JNZL
+I$0021: $28 //(AR2)=AH
+I$0022: $06 //JAL=$nn
+I$0023: $27 //Immediate
+I$0024: $bd //JP
+I$0025: $00 //NOP
+I$0026: $2c //(AR2)=RH
+I$0027: $ff //SOMF
+I$0028: $06 //JAL=$nn
+I$0029: $2a //Immediate
+I$002a: $bd //JP
+I$002b: $00 //NOP
