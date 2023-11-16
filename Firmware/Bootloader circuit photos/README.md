@@ -1,0 +1,1 @@
+This is a breadboard + Arduino Uno to burn the proper bootloader into Talos ES's ATmega1284P-PU I/O controller. <i>Notice that, in the photos, a 16MHz oscillator is used; that was during the early prototyping phase. You should use an 18.432MHz oscillator instead and adjust accordingly, so that Talos ES™ optimally does serial transfers according to standard baud rates.</i>
