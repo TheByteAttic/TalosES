@@ -1,0 +1,1 @@
+Here you can find high-resolution photos of a complete Talos ES™ unit (the prototype). If you are a blogger or member of the press, feel free to use these photos in your publications, commercial or otherwise, without specific or explicit permission from me.
