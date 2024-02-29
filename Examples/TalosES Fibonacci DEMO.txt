@@ -1,4 +1,5 @@
 // TalosES Fibonacci series example
+// Modified to run repeatedly, until reset
 // The results will be stored in D$0000 to D$000B
 // Correct result sequence, in hexadecimal:
 // $01 $02 $03 $05 $08 $0D $15 $22 $37 $59 $90 $E9
@@ -16,10 +17,9 @@ I$10 (AR1)=RH,AR2++
 I$11 A=R,AR1++
 I$12 JNZL,(AR2)=RH,AR1++
 I$13 BH=RH,AL=RL,AR2++
-I$14 SOMF
-I$15 JAL=$17
-I$17 JP
-I$18 NOP
+I$14 JAL=$00
+I$16 JP
+I$17 NOP
 
 // Assembled listing:
 //-------------------
@@ -43,8 +43,7 @@ I$0010: $32 //(AR1)=RH,AR2++
 I$0011: $58 //A=R,AR1++
 I$0012: $de //JNZL,(AR2)=RH,AR1++
 I$0013: $ad //BH=RH,AL=RL,AR2++
-I$0014: $be //SOMF
-I$0015: $06 //JAL=$nn
-I$0016: $17 //Immediate
-I$0017: $bf //JP
-I$0018: $00 //NOP
+I$0014: $06 //JAL=$nn
+I$0015: $00 //Immediate
+I$0016: $bf //JP
+I$0017: $00 //NOP

@@ -26,7 +26,7 @@ I$19 JAL=$1F
 I$1B BL=$01
 I$1D AL=RL
 I$1E AL=RL
-I$1F AH=RH,AL=RL
+I$1F A=R
 I$20 JNZL
 I$21 (AR2)=AH
 I$22 JAL=$27
@@ -49,21 +49,21 @@ I$0005: $01 //Immediate
 I$0006: $55 //AR1=A,AR2=A
 I$0007: $02 //AL=$nn
 I$0008: $26 //Immediate
-I$0009: $6d //JA=A,AR2++
+I$0009: $73 //JA=A,AR2++
 I$000a: $0b //AL=(AR1)
 I$000b: $04 //BL=$nn
 I$000c: $00 //Immediate
-I$000d: $bf //JZL
+I$000d: $c1 //JZL
 I$000e: $3f //AR1=B
 I$000f: $0a //AH=(AR1)
 I$0010: $04 //BL=$nn
 I$0011: $01 //Immediate
-I$0012: $bf //JZL
+I$0012: $c1 //JZL
 I$0013: $00 //NOP
 I$0014: $49 //BH=AH
 I$0015: $04 //BL=$nn
 I$0016: $02 //Immediate
-I$0017: $bf //JZL
+I$0017: $c1 //JZL
 I$0018: $00 //NOP
 I$0019: $06 //JAL=$nn
 I$001a: $1f //Immediate
@@ -71,16 +71,16 @@ I$001b: $04 //BL=$nn
 I$001c: $01 //Immediate
 I$001d: $4f //AL=RL
 I$001e: $4f //AL=RL
-I$001f: $a0 //AH=RH,AL=RL
-I$0020: $c5 //JNZL
+I$001f: $3b //A=R
+I$0020: $c7 //JNZL
 I$0021: $28 //(AR2)=AH
 I$0022: $06 //JAL=$nn
 I$0023: $27 //Immediate
-I$0024: $bd //JP
+I$0024: $bf //JP
 I$0025: $00 //NOP
 I$0026: $2c //(AR2)=RH
-I$0027: $ff //SOMF
+I$0027: $be //SOMF
 I$0028: $06 //JAL=$nn
 I$0029: $2a //Immediate
-I$002a: $bd //JP
+I$002a: $bf //JP
 I$002b: $00 //NOP
