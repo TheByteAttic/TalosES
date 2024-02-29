@@ -1,7 +1,7 @@
 // TalosES BIOS, for the ATmega1284P-PU
 // Created by Bernardo Kastrup at The Byte Attic!
-// Copyright (c) 2023, all rights reserved
-// Last edit: 15 November 2023
+// Copyright (c) 2023-2024, all rights reserved
+// Last edit: 25 February 2024
 
 #include <SPI.h>  // SPI library built into Arduino IDE
 #include <SD.h>   // SD-card library built into Arduino IDE
@@ -50,265 +50,266 @@ byte pos = 0; // Position in edit line currently occupied by cursor
 void(* resetFunc) (void) = 0; // Software reset fuction at address 0
 
 const String opcodeTable[256] = { // Table to translate mnemonics into opcode values
-  "NOP\r",
-  "AH=$nn\r",
-  "AL=$nn\r",
-  "BH=$nn\r",
-  "BL=$nn\r",
-  "JAH=$nn\r",
-  "JAL=$nn\r",
-  "AR1++\r",
-  "AR2++\r",
-  "AR1++,AR2++\r",
-  "AH=(AR1)\r",
-  "AL=(AR1)\r",
-  "BH=(AR1)\r",
-  "BL=(AR1)\r",
-  "JAH=(AR1)\r",
-  "JAL=(AR1)\r",
-  "AH=(AR2)\r",
-  "AL=(AR2)\r",
-  "BH=(AR2)\r",
-  "BL=(AR2)\r",
-  "JAH=(AR2)\r",
-  "JAL=(AR2)\r",
-  "AH=(AR1),AR2++\r",
-  "AL=(AR1),AR2++\r",
-  "BH=(AR1),AR2++\r",
-  "BL=(AR1),AR2++\r",
-  "JAH=(AR1),AR2++\r",
-  "JAL=(AR1),AR2++\r",
-  "AH=(AR2),AR1++\r",
-  "AL=(AR2),AR1++\r",
-  "BH=(AR2),AR1++\r",
-  "BL=(AR2),AR1++\r",
-  "JAH=(AR2),AR1++\r",
-  "JAL=(AR2),AR1++\r",
-  "(AR1)=AH\r",
-  "(AR1)=AL\r",
-  "(AR1)=BH\r",
-  "(AR1)=BL\r",
-  "(AR1)=RH\r",
-  "(AR1)=RL\r",
-  "(AR2)=AH\r",
-  "(AR2)=AL\r",
-  "(AR2)=BH\r",
-  "(AR2)=BL\r",
-  "(AR2)=RH\r",
-  "(AR2)=RL\r",
-  "(AR1)=AH,AR2++\r",
-  "(AR1)=AL,AR2++\r",
-  "(AR1)=BH,AR2++\r",
-  "(AR1)=BL,AR2++\r",
-  "(AR1)=RH,AR2++\r",
-  "(AR1)=RL,AR2++\r",
-  "(AR2)=AH,AR1++\r",
-  "(AR2)=AL,AR1++\r",
-  "(AR2)=BH,AR1++\r",
-  "(AR2)=BL,AR1++\r",
-  "(AR2)=RH,AR1++\r",
-  "(AR2)=RL,AR1++\r",
-  "A=B\r",
-  "A=R\r",
-  "B=A\r",
-  "B=R\r",
-  "AR1=A\r",
-  "AR1=B\r",
-  "AR1=R\r",
-  "AR2=A\r",
-  "AR2=B\r",
-  "AR2=R\r",
-  "JA=A\r",
-  "JA=B\r",
-  "JA=R\r",
-  "AH=BH\r",
-  "AH=RH\r",
-  "BH=AH\r",
-  "BH=RH\r",
-  "JAH=AH\r",
-  "JAH=BH\r",
-  "JAH=RH\r",
-  "AL=BL\r",
-  "AL=RL\r",
-  "BL=AL\r",
-  "BL=RL\r",
-  "JAL=AL\r",
-  "JAL=BL\r",
-  "JAL=RL\r",
-  "AR1=A,AR2=A\r",
-  "AR1=A,AR2++\r",
-  "AR1=B,AR2++\r",
-  "AR1=R,AR2++\r",
-  "AR2=A,AR1++\r",
-  "AR2=B,AR1++\r",
-  "AR2=R,AR1++\r",
-  "JA=A,AR1++\r",
-  "JA=B,AR1++\r",
-  "JA=R,AR1++\r",
-  "AH=BH,AR1++\r",
-  "AH=RH,AR1++\r",
-  "BH=AH,AR1++\r",
-  "BH=RH,AR1++\r",
-  "JAH=AH,AR1++\r",
-  "JAH=BH,AR1++\r",
-  "JAH=RH,AR1++\r",
-  "AL=BL,AR1++\r",
-  "AL=RL,AR1++\r",
-  "BL=AL,AR1++\r",
-  "BL=RL,AR1++\r",
-  "JAL=AL,AR1++\r",
-  "JAL=BL,AR1++\r",
-  "JAL=RL,AR1++\r",
-  "JA=A,AR2++\r",
-  "JA=B,AR2++\r",
-  "JA=R,AR2++\r",
-  "AH=BH,AR2++\r",
-  "AH=RH,AR2++\r",
-  "BH=AH,AR2++\r",
-  "BH=RH,AR2++\r",
-  "JAH=AH,AR2++\r",
-  "JAH=BH,AR2++\r",
-  "JAH=RH,AR2++\r",
-  "AL=BL,AR2++\r",
-  "AL=RL,AR2++\r",
-  "BL=AL,AR2++\r",
-  "BL=RL,AR2++\r",
-  "JAL=AL,AR2++\r",
-  "JAL=BL,AR2++\r",
-  "JAL=RL,AR2++\r",
-  "AH=BH,BL=AL\r",
-  "AH=BH,JAL=AL\r",
-  "AH=BH,JAL=BL\r",
-  "BH=AH,AL=BL\r",
-  "BH=AH,JAL=AL\r",
-  "BH=AH,JAL=BL\r",
-  "JAH=AH,AL=BL\r",
-  "JAH=BH,AL=BL\r",
-  "JAH=AH,BL=AL\r",
-  "JAH=BH,BL=AL\r",
-  "AH=BH,BL=AL,AR1++\r",
-  "AH=BH,JAL=AL,AR1++\r",
-  "AH=BH,JAL=BL,AR1++\r",
-  "BH=AH,AL=BL,AR1++\r",
-  "BH=AH,JAL=AL,AR1++\r",
-  "BH=AH,JAL=BL,AR1++\r",
-  "JAH=AH,AL=BL,AR1++\r",
-  "JAH=BH,AL=BL,AR1++\r",
-  "JAH=AH,BL=AL,AR1++\r",
-  "JAH=BH,BL=AL,AR1++\r",
-  "AH=BH,BL=AL,AR2++\r",
-  "AH=BH,JAL=AL,AR2++\r",
-  "AH=BH,JAL=BL,AR2++\r",
-  "BH=AH,AL=BL,AR2++\r",
-  "BH=AH,JAL=AL,AR2++\r",
-  "BH=AH,JAL=BL,AR2++\r",
-  "JAH=AH,AL=BL,AR2++\r",
-  "JAH=BH,AL=BL,AR2++\r",
-  "JAH=AH,BL=AL,AR2++\r",
-  "JAH=BH,BL=AL,AR2++\r",
-  "AH=RH,BH=RH\r",
-  "AL=RL,BL=RL\r",
-  "AH=RH,BL=RL\r",
-  "BH=RH,AL=RL\r",
-  "AH=RH,AL=RL\r",
-  "BH=RH,BL=RL\r",
-  "AH=RH,BH=RH,AR1++\r",
-  "AL=RL,BL=RL,AR1++\r",
-  "AH=RH,BL=RL,AR1++\r",
-  "BH=RH,AL=RL,AR1++\r",
-  "AH=RH,AL=RL,AR1++\r",
-  "BH=RH,BL=RL,AR1++\r",
-  "AH=RH,BH=RH,AR2++\r",
-  "AL=RL,BL=RL,AR2++\r",
-  "AH=RH,BL=RL,AR2++\r",
-  "BH=RH,AL=RL,AR2++\r",
-  "AH=RH,AL=RL,AR2++\r",
-  "BH=RH,BL=RL,AR2++\r",
-  "RH=AH-BH,RL=AL+BL\r",
-  "RH=AH-BH,RL=AL-BL\r",
-  "RH=AH+BH,RL=AL+BL\r",
-  "R=A+B\r",
-  "R=A-B\r",
-  "RH=AH-BH,RL=AL+BL,AR1++\r",
-  "RH=AH-BH,RL-AL-BL,AR1++\r",
-  "RH=AH+BH,RL=AL+BL,AR1++\r",
-  "R=A+B,AR1++\r",
-  "R=A-B,AR1++\r",
-  "RH=AH-BH,RL=AL+BL,AR2++\r",
-  "RH=AH-BH,RL-AL-BL,AR2++\r",
-  "RH=AH+BH,RL=AL+BL,AR2++\r",
-  "R=A+B,AR2++\r",
-  "R=A-B,AR2++\r",
-  "JP\r",
-  "JZH\r",
-  "JZL\r",
-  "JSH\r",
-  "JSL\r",
-  "JCH\r",
-  "JCL\r",
-  "JNZH\r",
-  "JNZL\r",
-  "JNSH\r",
-  "JNSL\r",
-  "JNCH\r",
-  "JNCL\r",
-  "JIM\r",
-  "JOM\r",
-  "JNIM\r",
-  "JNOM\r",
-  "JNZL,AH=(AR1),AR2++\r",
-  "JNZL,BH=(AR1),AR2++\r",
-  "JNZL,JAH=(AR1),AR2++\r",
-  "JNZL,JAL=(AR1),AR2++\r",
-  "JNZL,AH=(AR2),AR1++\r",
-  "JNZL,BH=(AR2),AR1++\r",
-  "JNZL,JAH=(AR2),AR1++\r",
-  "JNZL,JAL=(AR2),AR1++\r",
-  "JNZL,(AR1)=AH,AR2++\r",
-  "JNZL,(AR1)=BH,AR2++\r",
-  "JNZL,(AR1)=RH,AR2++\r",
-  "JNZL,(AR1)=RL,AR2++\r",
-  "JNZL,(AR2)=AH,AR1++\r",
-  "JNZL,(AR2)=BH,AR1++\r",
-  "JNZL,(AR2)=RH,AR1++\r",
-  "JNZL,(AR2)=RL,AR1++\r",
-  "JNSL,AH=(AR1),AR2++\r",
-  "JNSL,BH=(AR1),AR2++\r",
-  "JNSL,JAH=(AR1),AR2++\r",
-  "JNSL,JAL=(AR1),AR2++\r",
-  "JNSL,AH=(AR2),AR1++\r",
-  "JNSL,BH=(AR2),AR1++\r",
-  "JNSL,JAH=(AR2),AR1++\r",
-  "JNSL,JAL=(AR2),AR1++\r",
-  "JNSL,(AR1)=AH,AR2++\r",
-  "JNSL,(AR1)=BH,AR2++\r",
-  "JNSL,(AR1)=RH,AR2++\r",
-  "JNSL,(AR1)=RL,AR2++\r",
-  "JNSL,(AR2)=AH,AR1++\r",
-  "JNSL,(AR2)=BH,AR1++\r",
-  "JNSL,(AR2)=RH,AR1++\r",
-  "JNSL,(AR2)=RL,AR1++\r",
-  "JNCH,AL=(AR1),AR2++\r",
-  "JNCH,BL=(AR1),AR2++\r",
-  "JNCH,JAH=(AR1),AR2++\r",
-  "JNCH,JAL=(AR1),AR2++\r",
-  "JNCH,AL=(AR2),AR1++\r",
-  "JNCH,BL=(AR2),AR1++\r",
-  "JNCH,JAH=(AR2),AR1++\r",
-  "JNCH,JAL=(AR2),AR1++\r",
-  "JNCH,(AR1)=AL,AR2++\r",
-  "JNCH,(AR1)=BL,AR2++\r",
-  "JNCH,(AR1)=RH,AR2++\r",
-  "JNCH,(AR1)=RL,AR2++\r",
-  "JNCH,(AR2)=AL,AR1++\r",
-  "JNCH,(AR2)=BL,AR1++\r",
-  "JNCH,(AR2)=RH,AR1++\r",
-  "JNCH,(AR2)=RL,AR1++\r",
-  "CIMF\r",
-  "SOMF\r"
+"NOP\r",
+"AH=$nn\r",
+"AL=$nn\r",
+"BH=$nn\r",
+"BL=$nn\r",
+"JAH=$nn\r",
+"JAL=$nn\r",
+"AR1++\r",
+"AR2++\r",
+"AR1++,AR2++\r",
+"AH=(AR1)\r",
+"AL=(AR1)\r",
+"BH=(AR1)\r",
+"BL=(AR1)\r",
+"JAH=(AR1)\r",
+"JAL=(AR1)\r",
+"AH=(AR2)\r",
+"AL=(AR2)\r",
+"BH=(AR2)\r",
+"BL=(AR2)\r",
+"JAH=(AR2)\r",
+"JAL=(AR2)\r",
+"AH=(AR1),AR2++\r",
+"AL=(AR1),AR2++\r",
+"BH=(AR1),AR2++\r",
+"BL=(AR1),AR2++\r",
+"JAH=(AR1),AR2++\r",
+"JAL=(AR1),AR2++\r",
+"AH=(AR2),AR1++\r",
+"AL=(AR2),AR1++\r",
+"BH=(AR2),AR1++\r",
+"BL=(AR2),AR1++\r",
+"JAH=(AR2),AR1++\r",
+"JAL=(AR2),AR1++\r",
+"(AR1)=AH\r",
+"(AR1)=AL\r",
+"(AR1)=BH\r",
+"(AR1)=BL\r",
+"(AR1)=RH\r",
+"(AR1)=RL\r",
+"(AR2)=AH\r",
+"(AR2)=AL\r",
+"(AR2)=BH\r",
+"(AR2)=BL\r",
+"(AR2)=RH\r",
+"(AR2)=RL\r",
+"(AR1)=AH,AR2++\r",
+"(AR1)=AL,AR2++\r",
+"(AR1)=BH,AR2++\r",
+"(AR1)=BL,AR2++\r",
+"(AR1)=RH,AR2++\r",
+"(AR1)=RL,AR2++\r",
+"(AR2)=AH,AR1++\r",
+"(AR2)=AL,AR1++\r",
+"(AR2)=BH,AR1++\r",
+"(AR2)=BL,AR1++\r",
+"(AR2)=RH,AR1++\r",
+"(AR2)=RL,AR1++\r",
+"A=B\r",
+"A=R\r",
+"B=A\r",
+"B=R\r",
+"AR1=A\r",
+"AR1=B\r",
+"AR1=R\r",
+"AR2=A\r",
+"AR2=B\r",
+"AR2=R\r",
+"JA=A\r",
+"JA=B\r",
+"JA=R\r",
+"AH=BH\r",
+"AH=RH\r",
+"BH=AH\r",
+"BH=RH\r",
+"JAH=AH\r",
+"JAH=BH\r",
+"JAH=RH\r",
+"AL=BL\r",
+"AL=RL\r",
+"BL=AL\r",
+"BL=RL\r",
+"JAL=AL\r",
+"JAL=BL\r",
+"JAL=RL\r",
+"AR1=A,AR2=A\r",
+"AR1=B,AR2++\r",
+"AR2=B,AR1++\r",
+"A=R,AR1++\r",
+"B=R,AR1++\r",
+"A=R,AR2++\r",
+"B=R,AR2++\r",
+"AR1=A,AR2++\r",
+"AR1=B,AR2++\r",
+"AR1=R,AR2++\r",
+"AR2=A,AR1++\r",
+"AR2=B,AR1++\r",
+"AR2=R,AR1++\r",
+"JA=A,AR1++\r",
+"JA=B,AR1++\r",
+"JA=R,AR1++\r",
+"AH=BH,AR1++\r",
+"AH=RH,AR1++\r",
+"BH=AH,AR1++\r",
+"BH=RH,AR1++\r",
+"JAH=AH,AR1++\r",
+"JAH=BH,AR1++\r",
+"JAH=RH,AR1++\r",
+"AL=BL,AR1++\r",
+"AL=RL,AR1++\r",
+"BL=AL,AR1++\r",
+"BL=RL,AR1++\r",
+"JAL=AL,AR1++\r",
+"JAL=BL,AR1++\r",
+"JAL=RL,AR1++\r",
+"JA=A,AR2++\r",
+"JA=B,AR2++\r",
+"JA=R,AR2++\r",
+"AH=BH,AR2++\r",
+"AH=RH,AR2++\r",
+"BH=AH,AR2++\r",
+"BH=RH,AR2++\r",
+"JAH=AH,AR2++\r",
+"JAH=BH,AR2++\r",
+"JAH=RH,AR2++\r",
+"AL=BL,AR2++\r",
+"AL=RL,AR2++\r",
+"BL=AL,AR2++\r",
+"BL=RL,AR2++\r",
+"JAL=AL,AR2++\r",
+"JAL=BL,AR2++\r",
+"JAL=RL,AR2++\r",
+"AH=BH,BL=AL\r",
+"AH=BH,JAL=AL\r",
+"AH=BH,JAL=BL\r",
+"BH=AH,AL=BL\r",
+"BH=AH,JAL=AL\r",
+"BH=AH,JAL=BL\r",
+"JAH=AH,AL=BL\r",
+"JAH=BH,AL=BL\r",
+"JAH=AH,BL=AL\r",
+"JAH=BH,BL=AL\r",
+"AH=BH,BL=AL,AR1++\r",
+"AH=BH,JAL=AL,AR1++\r",
+"AH=BH,JAL=BL,AR1++\r",
+"BH=AH,AL=BL,AR1++\r",
+"BH=AH,JAL=AL,AR1++\r",
+"BH=AH,JAL=BL,AR1++\r",
+"JAH=AH,AL=BL,AR1++\r",
+"JAH=BH,AL=BL,AR1++\r",
+"JAH=AH,BL=AL,AR1++\r",
+"JAH=BH,BL=AL,AR1++\r",
+"AH=BH,BL=AL,AR2++\r",
+"AH=BH,JAL=AL,AR2++\r",
+"AH=BH,JAL=BL,AR2++\r",
+"BH=AH,AL=BL,AR2++\r",
+"BH=AH,JAL=AL,AR2++\r",
+"BH=AH,JAL=BL,AR2++\r",
+"JAH=AH,AL=BL,AR2++\r",
+"JAH=BH,AL=BL,AR2++\r",
+"JAH=AH,BL=AL,AR2++\r",
+"JAH=BH,BL=AL,AR2++\r",
+"AH=RH,BH=RH\r",
+"AL=RL,BL=RL\r",
+"AH=RH,BL=RL\r",
+"BH=RH,AL=RL\r",
+"AH=RH,BH=RH,AR1++\r",
+"AL=RL,BL=RL,AR1++\r",
+"AH=RH,BL=RL,AR1++\r",
+"BH=RH,AL=RL,AR1++\r",
+"AH=RH,BH=RH,AR2++\r",
+"AL=RL,BL=RL,AR2++\r",
+"AH=RH,BL=RL,AR2++\r",
+"BH=RH,AL=RL,AR2++\r",
+"RH=AH-BH,RL=AL+BL\r",
+"RH=AH-BH,RL=AL-BL\r",
+"RH=AH+BH,RL=AL+BL\r",
+"R=A+B\r",
+"R=A-B\r",
+"RH=AH-BH,RL=AL+BL,AR1++\r",
+"RH=AH-BH,RL-AL-BL,AR1++\r",
+"RH=AH+BH,RL=AL+BL,AR1++\r",
+"R=A+B,AR1++\r",
+"R=A-B,AR1++\r",
+"RH=AH-BH,RL=AL+BL,AR2++\r",
+"RH=AH-BH,RL-AL-BL,AR2++\r",
+"RH=AH+BH,RL=AL+BL,AR2++\r",
+"R=A+B,AR2++\r",
+"R=A-B,AR2++\r",
+"CIMF\r",
+"SOMF\r",
+"JP\r",
+"JZH\r",
+"JZL\r",
+"JSH\r",
+"JSL\r",
+"JCH\r",
+"JCL\r",
+"JNZH\r",
+"JNZL\r",
+"JNSH\r",
+"JNSL\r",
+"JNCH\r",
+"JNCL\r",
+"JIM\r",
+"JOM\r",
+"JNIM\r",
+"JNOM\r",
+"JNZL,AH=(AR1),AR2++\r",
+"JNZL,BH=(AR1),AR2++\r",
+"JNZL,JAH=(AR1),AR2++\r",
+"JNZL,JAL=(AR1),AR2++\r",
+"JNZL,AH=(AR2),AR1++\r",
+"JNZL,BH=(AR2),AR1++\r",
+"JNZL,JAH=(AR2),AR1++\r",
+"JNZL,JAL=(AR2),AR1++\r",
+"JNZL,(AR1)=AH,AR2++\r",
+"JNZL,(AR1)=BH,AR2++\r",
+"JNZL,(AR1)=RH,AR2++\r",
+"JNZL,(AR1)=RL,AR2++\r",
+"JNZL,(AR2)=AH,AR1++\r",
+"JNZL,(AR2)=BH,AR1++\r",
+"JNZL,(AR2)=RH,AR1++\r",
+"JNZL,(AR2)=RL,AR1++\r",
+"JNSL,AH=(AR1),AR2++\r",
+"JNSL,BH=(AR1),AR2++\r",
+"JNSL,JAH=(AR1),AR2++\r",
+"JNSL,JAL=(AR1),AR2++\r",
+"JNSL,AH=(AR2),AR1++\r",
+"JNSL,BH=(AR2),AR1++\r",
+"JNSL,JAH=(AR2),AR1++\r",
+"JNSL,JAL=(AR2),AR1++\r",
+"JNSL,(AR1)=AH,AR2++\r",
+"JNSL,(AR1)=BH,AR2++\r",
+"JNSL,(AR1)=RH,AR2++\r",
+"JNSL,(AR1)=RL,AR2++\r",
+"JNSL,(AR2)=AH,AR1++\r",
+"JNSL,(AR2)=BH,AR1++\r",
+"JNSL,(AR2)=RH,AR1++\r",
+"JNSL,(AR2)=RL,AR1++\r",
+"JNCH,AL=(AR1),AR2++\r",
+"JNCH,BL=(AR1),AR2++\r",
+"JNCH,JAH=(AR1),AR2++\r",
+"JNCH,JAL=(AR1),AR2++\r",
+"JNCH,AL=(AR2),AR1++\r",
+"JNCH,BL=(AR2),AR1++\r",
+"JNCH,JAH=(AR2),AR1++\r",
+"JNCH,JAL=(AR2),AR1++\r",
+"JNCH,(AR1)=AL,AR2++\r",
+"JNCH,(AR1)=BL,AR2++\r",
+"JNCH,(AR1)=RH,AR2++\r",
+"JNCH,(AR1)=RL,AR2++\r",
+"JNCH,(AR2)=AL,AR1++\r",
+"JNCH,(AR2)=BL,AR1++\r",
+"JNCH,(AR2)=RH,AR1++\r",
+"JNCH,(AR2)=RL,AR1++\r"
 };
 
 void setup() {
+  byte inByte;
   pinMode(IMF, INPUT);
   pinMode(OMF, INPUT);
   pinMode(SIMF, OUTPUT);
@@ -328,16 +329,16 @@ void setup() {
   // Port A is treated as a whole byte
   DDRA = B11111111;
   // Writing default values to outputs
-  digitalWrite(SIMF, LOW);    // Inactive
-  digitalWrite(COMF, LOW);    // Inactive
-  digitalWrite(STPSLC, HIGH); // This signal is active low, so inactive by default
+  digitalWrite(SIMF, LOW);    // Inactive (active high)
+  digitalWrite(COMF, LOW);    // Inactive (active high)
+  digitalWrite(STPSLC, HIGH); // Inactive (active low)
   digitalWrite(STPCLK, LOW);
-  digitalWrite(HLT, HIGH);    // Active, CPU should be halted by default
-  digitalWrite(RST, HIGH);    // Active, CPU should be in reset by default, to release the instruction memory
-  digitalWrite(DRD, HIGH);    // Inactive
-  digitalWrite(DWR, HIGH);    // Inactive
-  digitalWrite(IRD, HIGH);    // Inactive
-  digitalWrite(IWR, HIGH);    // Inactive
+  digitalWrite(HLT, HIGH);    // Active
+  digitalWrite(RST, HIGH);    // Active
+  digitalWrite(DRD, HIGH);    // Inactive (active low)
+  digitalWrite(DWR, HIGH);    // Inactive (active low)
+  digitalWrite(IRD, HIGH);    // Inactive (active low)
+  digitalWrite(IWR, HIGH);    // Inactive (active low)
   digitalWrite(SLC0, HIGH);   // Select unused output 7 by default
   digitalWrite(SLC1, HIGH);
   digitalWrite(SLC2, HIGH);
@@ -345,24 +346,27 @@ void setup() {
   // Initialize serial comms with terminal
   while(!Serial1) ; // Wait for serial line to connect
   Serial1.begin(19200); // Start up the serial link at given baud rate
+  // Initialize uSD card, if present
   clearLine(); // Clear the edit line
-  Serial1.println(F("=================================")); // Welcome greeting
+  Serial1.println(F("=====================================")); // Welcome greeting
   Serial1.println(F("Welcome to TalosES"));
   Serial1.println(F("Brought to you by The Byte Attic!"));
-  Serial1.println(F("Copyright (c) 2023 by B. Kastrup"));
+  Serial1.println(F("Copyright (c) 2023-3034 by B. Kastrup"));
   Serial1.println(F("Works best in 80 columns"));
   Serial1.println(F("For help, type \"help\" or \"?\""));
-  Serial1.println(F("================================="));
-  // Initialize uSD card, if present
+  Serial1.println(F("====================================="));
+  Serial1.println("");
+  Serial1.println(F("Initializing microSD card"));
   if (!SD.begin(chipSelect)) Serial1.println("uSD card not present");
+  else demo(); // Automatically start demo
 }
 
 void loop() {
   byte inByte; // Byte coming in from serial port
   if (run) { // First check the OMF if we are in run mode, to see if the running program has completed
-    if(digitalRead(OMF)) {
-      digitalWrite(RST, HIGH); // Clear the CPU's reset state
-      digitalWrite(HLT, HIGH); // Clear the CPU's halt state
+    if(digitalRead(OMF)) { // The program has completed, for it has set the OMF
+      digitalWrite(HLT, HIGH); // Put the CPU back in halt state
+      digitalWrite(RST, HIGH); // Put the CPU back in reset state
       digitalWrite(COMF, HIGH); // Clear the outgoing mail flag
       delay(DELAY);
       digitalWrite(COMF, LOW);
@@ -514,6 +518,8 @@ void enter() {
     Serial1.println(F("\"halt on\" and \"halt off\": turn CPU halt mode on and off"));
     Serial1.println(F("\"step on\" and \"step off\": turn CPU step mode on and off"));
     Serial1.println(F("\"run\": runs code in instruction memory, starting from address I$0000"));
+    Serial1.println(F("\"walk\": like \"run\", but uses a very slow clock so LED blinking is visible"));
+    Serial1.println(F("\"demo\": runs the blinken lights demo (requires file DEMO.BIN in uSD card)"));
     Serial1.println(F("\"ipeek $aaaa\": reads a byte from instruction memory at address I$aaaa"));
     Serial1.println(F("\"ipoke $aaaa $dd\": writes byte $dd to instruction memory at address I$aaaa"));
     Serial1.println(F("\"dpeek $aaaa\": reads a byte from data memory at address D$aaaa"));
@@ -602,9 +608,16 @@ void enter() {
     }
   }
   else if (command == F("RUN")) { // Runs code in instruction memory
-    digitalWrite(RST, LOW); // Take the system out of reset state
-    digitalWrite(HLT, LOW); // Take the system out of halt state
+    digitalWrite(RST, LOW); // Take the CPU out of reset state
+    digitalWrite(HLT, LOW); // Take the CPU out of halt state
     run = true; // Set global run indicator
+  }
+  else if (command == F("WALK")) { // Runs code in instruction memory using a slow clock generated by the I/O controller
+    walk();
+  }
+  else if (command == F("DEMO")) { // Runs the blinken lights demo
+    if (!SD.begin(chipSelect)) Serial1.println("uSD card not present");
+    else demo();
   }
   else if (command.indexOf("D$") == 0) { // The user is entering a byte into data memory...
     // This is like a DPOKE, but not verbose, so enables pasting on the terminal window
@@ -683,6 +696,40 @@ byte findOpcode (String mnemonic) {
     if (mnemonic.equals(opcodeTable[i])) return (i);
   }
   return (0); // Returns zero if opcode not found
+}
+
+void walk() {
+  digitalWrite(STPSLC, LOW); // Turn on step mode
+  digitalWrite(RST, LOW); // Take the CPU out of reset state
+  digitalWrite(HLT, LOW); // Take the CPU out of halt state
+  while(!digitalRead(OMF)) { // Execute until the OMF is set by the code running in the CPU
+    digitalWrite(STPCLK, LOW); // Tick the step clock slowly until program completes
+    delay(50);
+    digitalWrite(STPCLK, HIGH);
+    delay(50);
+  }
+  digitalWrite(HLT, HIGH); // Put the CPU in halt state again
+  digitalWrite(RST, HIGH); // Put the CPU in reset state again
+  digitalWrite(STPSLC, HIGH); // Turn off step mode
+  Serial1.println(F("Program execution completed"));
+}
+
+void demo() {
+  Serial1.println(F("Loading blinken lights demo file"));
+  load ("DEMO.BIN");
+  digitalWrite(STPSLC, LOW); // Turn on step mode
+  digitalWrite(RST, LOW); // Take the CPU out of reset state
+  digitalWrite(HLT, LOW); // Take the CPU out of halt state
+  while(Serial1.available() == 0) { // While user hasn't pressed any key, execute the demo
+    digitalWrite(STPCLK, LOW); // Tick the step clock slowly until program completes
+    delay(50);
+    digitalWrite(STPCLK, HIGH);
+    delay(50);
+  }
+  // Now stop the demo
+  digitalWrite(HLT, HIGH); // Put the CPU in halt state again
+  digitalWrite(RST, HIGH); // Put the CPU in reset state again
+  digitalWrite(STPSLC, HIGH); // Turn off step mode
 }
 
 void ilist(unsigned int bottom, unsigned int top) { // Lists contents of instruction memory
