@@ -351,7 +351,7 @@ void setup() {
   Serial1.println(F("=====================================")); // Welcome greeting
   Serial1.println(F("Welcome to TalosES"));
   Serial1.println(F("Brought to you by The Byte Attic!"));
-  Serial1.println(F("Copyright (c) 2023-3034 by B. Kastrup"));
+  Serial1.println(F("Copyright (c) 2023-2034 by B. Kastrup"));
   Serial1.println(F("Works best in 80 columns"));
   Serial1.println(F("For help, type \"help\" or \"?\""));
   Serial1.println(F("====================================="));
